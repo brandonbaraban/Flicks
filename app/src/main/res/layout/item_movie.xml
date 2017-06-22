@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:textColor="@color/overview"
         android:layout_below="@+id/tvTitle"
         android:layout_toRightOf="@+id/ivPosterImage"
         android:text="Movie overview and synopsis" />
@@ -30,8 +31,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:textColor="@color/title"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/ivPosterImage"
         android:text="Movie Title"
         android:textAppearance="@android:style/TextAppearance.Large" />
+
 </RelativeLayout>
