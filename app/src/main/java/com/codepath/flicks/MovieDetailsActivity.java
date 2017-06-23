@@ -40,11 +40,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
     TextView tvOverview;
     RatingBar rbVoteAverage;
     ImageView ivTrailer;
+    TextView tvReleaseDate;
 
     // client for video id request
     AsyncHttpClient client;
 
     String videoKey;
+    String releaseDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         tvOverview = (TextView) findViewById(R.id.tvOverview);
         rbVoteAverage = (RatingBar) findViewById(R.id.rbVoteAverage);
         ivTrailer = (ImageView) findViewById(R.id.ivTrailer);
+        tvReleaseDate = (TextView) findViewById(R.id.tvReleaseDate);
 
         // unwrap the movie passed in via intent, using its simple name as a key
         movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
@@ -70,7 +73,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         Context context = ivTrailer.getContext();
         Glide.with(context)
                 .load(movie.getTrailerImageUrl())
-                //.bitmapTransform(new RoundedCornersTransformation(context, radius, margin))
+                //.placeholder(R.drawable.flicks_backdrop_placeholder)
+                //.error(R.drawable.flicks_backdrop_placeholder)
                 .into(ivTrailer);
 
         // set the title and overview
@@ -81,11 +85,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
         float voteAverage = movie.getVoteAverage().floatValue();
         rbVoteAverage.setRating(voteAverage = voteAverage > 0 ? voteAverage / 2.0f : voteAverage);
 
+        getReleaseDate();
+
         // set on click listener for trailer
         ivTrailer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MovieDetailsActivity.this, "Loading movie trailer", Toast.LENGTH_LONG); // TODO - fix this
+                Toast.makeText(MovieDetailsActivity.this, "Loading movie trailer", Toast.LENGTH_SHORT).show();
                 getVideoKey();
             }
         });
@@ -119,6 +125,37 @@ public class MovieDetailsActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.e(TAG, "Failed to fetch video key");
+            }
+        });
+    }
+
+    // get the release date of the movie
+    // get the video key of movie
+    private void getReleaseDate() {
+        // create the url object
+        String url = API_BASE_URL + "/movie/" + movie.getId() + "/release_dates";
+        // set the request parameters
+        RequestParams params = new RequestParams();
+        params.put(API_KEY_PARAM, getString(R.string.api_key));
+        // execute GET request expecting JSON object in response
+        client.get(url, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    // load the results into the releaseDate
+                    JSONArray results = response.getJSONArray("results");
+                    releaseDate = results.getJSONObject(0).getJSONArray("release_dates").getJSONObject(0).getString("release_date").substring(0, 10);
+                    Log.i(TAG, String.format("Loaded %s video key(s)", results.length()));
+                    tvReleaseDate.setText("Release date: " + releaseDate);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.e(TAG, "Failed to fetch release date");
             }
         });
     }
