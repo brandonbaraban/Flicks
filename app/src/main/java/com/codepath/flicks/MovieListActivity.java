@@ -30,10 +30,14 @@ public class MovieListActivity extends AppCompatActivity {
     public final static String API_BASE_URL = "https://api.themoviedb.org/3";
     // the parameter name for the API key
     public final static String API_KEY_PARAM = "api_key";
+    // the parameter name for the page
+    public final static String PAGE_PARAM = "page";
     // tag for logging from this activity
     public final static String TAG = "MovieListActivity";
 
     // instance fields
+    // number of pages to load
+    Integer pages = 2;
     AsyncHttpClient client;
     // the list of currently playing movies
     ArrayList<Movie> movies;
@@ -65,12 +69,13 @@ public class MovieListActivity extends AppCompatActivity {
     }
 
     // get the list of currently playing movies from the API
-    private void getNowPlaying() {
+    private void getNowPlaying(Integer page) {
         // create the URL
         String url = API_BASE_URL + "/movie/now_playing";
         // set the request parameters
         RequestParams params = new RequestParams();
         params.put(API_KEY_PARAM, getString(R.string.api_key)); // API key, always required
+        params.put(PAGE_PARAM, page);
         // execute a GET request expecting a JSON object response
         client.get(url, params, new JsonHttpResponseHandler() {
 
@@ -117,7 +122,9 @@ public class MovieListActivity extends AppCompatActivity {
                     // pass config to adapter
                     adapter.setConfig(config);
                     // get the now playing movie list
-                    getNowPlaying();
+                    for (int i = 1; i < pages + 1; i++) {
+                        getNowPlaying(i);
+                    }
                 } catch (JSONException e) {
                     logError("Failed parsing configuration", e, true);
                 }
