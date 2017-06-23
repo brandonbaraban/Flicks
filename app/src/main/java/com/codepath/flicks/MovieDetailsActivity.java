@@ -22,6 +22,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 
 import static com.codepath.flicks.MovieListActivity.API_BASE_URL;
@@ -36,11 +39,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
     Movie movie;
 
     // the view objects
-    TextView tvTitle;
-    TextView tvOverview;
-    RatingBar rbVoteAverage;
-    ImageView ivTrailer;
-    TextView tvReleaseDate;
+    @BindView(R.id.tvTitle) TextView tvTitle;
+    @BindView(R.id.tvOverview) TextView tvOverview;
+    @BindView(R.id.rbVoteAverage) RatingBar rbVoteAverage;
+    @BindView(R.id.ivTrailer) ImageView ivTrailer;
+    @BindView(R.id.tvReleaseDate) TextView tvReleaseDate;
 
     // client for video id request
     AsyncHttpClient client;
@@ -57,11 +60,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         client = new AsyncHttpClient();
 
         // resolve the view objects
-        tvTitle = (TextView) findViewById(R.id.tvTitle);
-        tvOverview = (TextView) findViewById(R.id.tvOverview);
-        rbVoteAverage = (RatingBar) findViewById(R.id.rbVoteAverage);
-        ivTrailer = (ImageView) findViewById(R.id.ivTrailer);
-        tvReleaseDate = (TextView) findViewById(R.id.tvReleaseDate);
+        ButterKnife.bind(this);
 
         // unwrap the movie passed in via intent, using its simple name as a key
         movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
@@ -86,21 +85,18 @@ public class MovieDetailsActivity extends AppCompatActivity {
         rbVoteAverage.setRating(voteAverage = voteAverage > 0 ? voteAverage / 2.0f : voteAverage);
 
         getReleaseDate();
+    }
 
-        // set on click listener for trailer
-        ivTrailer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MovieDetailsActivity.this, "Loading movie trailer", Toast.LENGTH_SHORT).show();
-                if (movie.getVideoKey() != null) {
-                    Intent intent = new Intent(MovieDetailsActivity.this, MovieTrailerActivity.class);
-                    intent.putExtra("video_key", movie.getVideoKey());
-                    MovieDetailsActivity.this.startActivity(intent);
-                } else {
-                    getVideoKey();
-                }
-            }
-        });
+    @OnClick(R.id.ivTrailer)
+    public void onClick(View v) {
+        Toast.makeText(MovieDetailsActivity.this, "Loading movie trailer", Toast.LENGTH_SHORT).show();
+        if (movie.getVideoKey() != null) {
+            Intent intent = new Intent(MovieDetailsActivity.this, MovieTrailerActivity.class);
+            intent.putExtra("video_key", movie.getVideoKey());
+            MovieDetailsActivity.this.startActivity(intent);
+        } else {
+            getVideoKey();
+        }
     }
 
     // get the video key of movie
