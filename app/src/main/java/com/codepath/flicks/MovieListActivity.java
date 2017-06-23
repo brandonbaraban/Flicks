@@ -43,7 +43,6 @@ public class MovieListActivity extends AppCompatActivity {
     MovieAdapter adapter;
     // image config
     Config config;
-    // the list of video ids of the currently playing movies
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
