@@ -24,14 +24,18 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-* [x] Truncated movie overview if text was too long (shows full overview in detailed activity)
+* [x] Truncate movie overview if text was too long (shows full overview in detailed activity)
 * [x] Display release date along with other details in movie details activity
+* [x] Load multiple pages of now playing movies
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+![VideoWalkthroughOne](VideoWalkthroughOne.gif)
+![VideoWalkthroughTwo](VideoWalkthroughTwo.gif)
+![VideoWalkthroughThree](VideoWalkthroughThree.gif)
+![VideoWalkthroughFour](VideoWalkthroughFour.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
