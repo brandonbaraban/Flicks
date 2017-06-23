@@ -21,6 +21,7 @@ public class Movie {
     Double voteAverage;
     Integer id;
     String trailerImageUrl;
+    String videoKey;
 
     public Movie() {}
 
@@ -67,6 +68,14 @@ public class Movie {
 
     public String getLongOverview() {
         return longOverview;
+    }
+
+    public String getVideoKey() {
+        return videoKey;
+    }
+
+    public void setVideoKey(String videoKey) {
+        this.videoKey = videoKey;
     }
 
     public String getShortOverview() {

@@ -92,7 +92,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MovieDetailsActivity.this, "Loading movie trailer", Toast.LENGTH_SHORT).show();
-                getVideoKey();
+                if (movie.getVideoKey() != null) {
+                    Intent intent = new Intent(MovieDetailsActivity.this, MovieTrailerActivity.class);
+                    intent.putExtra("video_key", movie.getVideoKey());
+                    MovieDetailsActivity.this.startActivity(intent);
+                } else {
+                    getVideoKey();
+                }
             }
         });
     }
@@ -113,6 +119,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     // load the results into the videoKey
                     JSONArray results = response.getJSONArray("results");
                     videoKey = results.getJSONObject(0).getString("key");
+                    movie.setVideoKey(videoKey);
                     Log.i(TAG, String.format("Loaded %s video key(s)", results.length()));
                     Intent intent = new Intent(MovieDetailsActivity.this, MovieTrailerActivity.class);
                     intent.putExtra("video_key", videoKey);
