@@ -1,46 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    android:padding="10dp"
-    tools:context="com.codepath.flicks.MovieDetailsActivity">
+    android:background="@color/background">
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:textColor="@color/title"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="Movie Title"
-        android:textAppearance="@android:style/TextAppearance.Large" />
+    <RelativeLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        tools:context="com.codepath.flicks.MovieDetailsActivity">
 
-    <RatingBar
-        android:id="@+id/rbVoteAverage"
-        style="@style/Widget.AppCompat.RatingBar.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/tvTitle"
-        android:numStars="5"
-        android:stepSize="0.5" />
+        <ImageView
+            android:id="@+id/ivTrailer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            app:srcCompat="@drawable/flicks_backdrop_placeholder" />
 
-    <TextView
-        android:id="@+id/tvOverview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:textColor="@color/overview"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/rbVoteAverage"
-        android:text="Movie overview and synopsis" />
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/title"
+            android:text="Movie Title"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:layout_below="@+id/ivTrailer"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <RatingBar
+            android:id="@+id/rbVoteAverage"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tvTitle"
+            android:numStars="5"
+            android:stepSize="0.5" />
+
+        <TextView
+            android:id="@+id/tvOverview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/overview"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/rbVoteAverage"
+            android:text="Movie overview and synopsis" />
+
+    </RelativeLayout>
+</ScrollView>
